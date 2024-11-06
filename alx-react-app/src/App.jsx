@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <div>
-        <UserProfile name="Pope" age="25" bio="Loves skateboarding and video games" />
+        <UserProfile name="Alice" age="25" bio="Loves hiking and photography" />
         <WelcomeMessage />
         <Header />
         <MainContent />
