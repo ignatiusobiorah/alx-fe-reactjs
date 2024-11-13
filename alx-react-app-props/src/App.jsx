@@ -1,8 +1,7 @@
 import './App.css'
 import UserContext from './components/UserContext';
-// import React from 'react';
-// import { useContext } from 'react';
 import ProfilePage from './ProfilePage';
+import UserProfile from './components/UserProfile';
 
 function App() {
   const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
@@ -12,9 +11,13 @@ function App() {
   return (
     <>
       <div>
-        {/* <h1>test</h1> */}
+        <UserContext.Provider value={{userData:userData, abNumb:abNumb}}>
+        <UserProfile />
+        </UserContext.Provider>
+      
       <UserContext.Provider value={{userData:userData, abNumb:abNumb}}>
-        <ProfilePage />;
+      
+        <ProfilePage />
       </UserContext.Provider>
        
       </div>
