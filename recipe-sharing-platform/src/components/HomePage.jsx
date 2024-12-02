@@ -6,7 +6,7 @@ function Homepage() {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await fetch("./data.json");
+                const response = await fetch('./data.json');
                 const data = await response.json();
                 setRecipes(data);
             } catch (error) {
@@ -34,6 +34,7 @@ function Homepage() {
             <p className="text-gray-600 text-base sm:text-lg">{recipe.summary}</p>
         </div>
         ))}
+        <h2>recipe Homepage</h2>
     </div>
   );
 }
