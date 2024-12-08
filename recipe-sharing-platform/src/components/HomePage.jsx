@@ -1,42 +1,59 @@
-import {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; 
+import recipeData from "../data.json"; // Import the mock data
 
-function Homepage() {
-    const [recipes, setRecipes] = useState([]);
+<Link to={`/recipe/${recipe.id}`} className="block hover:scale-105 transition-transform">
+  <div className="bg-white p-4 rounded-lg shadow-md">
+    <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover rounded-md mb-4" />
+    <h2 className="text-xl font-semibold text-gray-800">{recipe.title}</h2>
+    <p className="text-gray-600 text-sm">{recipe.summary}</p>
+  </div>
+</Link>
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await fetch('./data.json');
-                const data = await response.json();
-                setRecipes(data);
-            } catch (error) {
-                console.error("Error fetching recipes", error);
-            }  
-        };
-        fetchRecipes();
-    }, []);
+
+const HomePage = () => {
+  const [recipes, setRecipes] = useState([]);
+
+  // Load recipe data into state on component mount
+  useEffect(() => {
+    setRecipes(recipeData); // In a real-world app, this would be a fetch call
+  }, []);
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {recipes.map((recipe, index) => (
-        <div
-            key={index}
-            className="bg-white rounded-lg shadow-md p-4 sm:p-6 md:p-8 hover:shadow-xl transition-shadow duration-300 ease-in-out"
-        >
-            <img
-            src={recipe.image}
-            alt={recipe.title}
-            className="w-full h-48 sm:h-64 md:h-48 object-cover rounded-t-lg"
-            />
-            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mt-2">
-            {recipe.title}
-            </h2>
-            <p className="text-gray-600 text-base sm:text-lg">{recipe.summary}</p>
-        </div>
+    
+    <div className="container mx-auto p-4">
+      <h1 className="text-4xl  text-blue-500 font-bold text-center mb-8">Recipe Sharing Platform</h1>
+      
+     
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {recipes.map((recipe) => (
+          <div key={recipe.id} className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+            <img className="w-full h-48 object-cover" src={recipe.image} alt={recipe.title} />
+
+            <div className="px-6 py-4">
+              <h2 className="text-xl font-semibold text-blue-800">{recipe.title}</h2>
+              <p className="text-white -600 mt-2">{recipe.summary}</p>
+            </div>
+
+            <div className="px-6 py-2">
+              <Link to ={`/recipe/${recipe.id}`} // Link to the recipe detail page
+              className="text-blue-500 hover:underline">View Recipe</Link>
+            </div>
+          </div>
         ))}
-        <h2>recipe Homepage</h2>
+
+         {/* Link to the Add Recipe page */}
+      <div className="text-center mb-6">
+        <Link to="/add-recipe"
+          className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+        >
+          Add New Recipe
+        </Link>
+      </div>
+      </div>
     </div>
   );
-}
+};
 
-export default Homepage;
+export default HomePage;
